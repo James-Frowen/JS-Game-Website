@@ -20,6 +20,7 @@ class SnakeBody {
         this.dy = bodyInFront.dy;
     }
     followHead(dx, dy) {
+    
         this.dx = dx;
         this.dy = dy;
     }
@@ -155,7 +156,6 @@ function checkSelf() {
     var yHead = snakeHead().y;
     var i;
     for (i = snakebodies.length - 1; i >= 1; i--) {
-        console.log(xHead + "," + yHead + " == " + snakebodies[i].x + "," + snakebodies[i].y);
         if (xHead == snakebodies[i].x &&
             yHead == snakebodies[i].y) {
             console.log("LOST");
