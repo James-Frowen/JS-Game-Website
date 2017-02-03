@@ -167,15 +167,15 @@ function spawnFood() {
     var randx = randomX()
     var randy = randomY()
 
-    xFood = width / 2 + (speed - 1) * randx;
-    yFood = height / 2 + (speed - 1) * randy;
+    xFood = width / 2 + speed * randx;
+    yFood = height / 2 + speed * randy;
 }
 function randomX() {
-    var range = (width - size * 2) / speed;
+    var range = (width / speed) - 2;
     return Math.round((Math.random() - 0.5) * range);
 }
 function randomY() {
-    var range = (height - size * 2) / speed;
+    var range = (height / speed) - 2;
     return Math.round((Math.random() - 0.5) * range);
 }
 
