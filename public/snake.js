@@ -35,7 +35,7 @@ var addToBody = false;
 
 var lost = false;
 var score = 0;
-var hightscore = 0;
+var highscore = 0;
 
 function init() {
     dx = 0;
