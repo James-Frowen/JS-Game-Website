@@ -60,6 +60,17 @@ function restart() {
         init();
     }
 }
+function lose() {
+    lost = true;
+    ctx.font = "30px Arial";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+        ctx.fillText("YOU LOSE!", width / 2, height / 2);
+        ctx.font = "15px Arial";
+        ctx.fillText("Score: " + score, width / 2, 5 * height / 8);
+        ctx.fillText("Hight Score: " + highscore, width / 2, 5.8 * height / 8);
+        ctx.fillText("Press Enter to restart", width / 2, 7 * height / 8);
+}
 function loop() {
     if (!lost) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -72,16 +83,6 @@ function loop() {
 
         drawSnake();
         drawFood();
-    }
-    else {
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "red";
-        ctx.textAlign = "center";
-        ctx.fillText("YOU LOSE!", width / 2, height / 2);
-        ctx.font = "15px Arial";
-        ctx.fillText("Score: " + score, width / 2, 5 * height / 8);
-        ctx.fillText("Hight Score: " + highscore, width / 2, 5.8 * height / 8);
-        ctx.fillText("Press Enter to restart", width / 2, 7 * height / 8);
     }
 }
 function drawSnake() {
@@ -139,7 +140,7 @@ function checkWall() {
         yHead < speed || //less than 0
         yHead > height - speed  // greater than height
     ) {
-        lost = true;
+        lose();
     }
 }
 function checkFood() {
@@ -149,6 +150,7 @@ function checkFood() {
         addToBody = true;
         spawnFood();
         score++;
+        console.log(score);
     }
 }
 function checkSelf() {
@@ -159,7 +161,7 @@ function checkSelf() {
         if (xHead == snakebodies[i].x &&
             yHead == snakebodies[i].y) {
             console.log("LOST");
-            lost = true;
+            lose();
         }
     }
 }
