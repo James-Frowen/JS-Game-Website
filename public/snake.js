@@ -35,6 +35,7 @@ var addToBody = false;
 
 var lost = false;
 var score = 0;
+var hightscore = 0;
 
 function init() {
     dx = 0;
@@ -52,6 +53,9 @@ function init() {
 }
 function restart() {
     if (lost) {
+        if (highscore < score) {
+            highscore = score;
+        }
         init();
     }
 }
@@ -74,7 +78,8 @@ function loop() {
         ctx.textAlign = "center";
         ctx.fillText("YOU LOSE!", width / 2, height / 2);
         ctx.font = "15px Arial";
-        ctx.fillText("score: " + score, width / 2, 5 * height / 8);
+        ctx.fillText("Score: " + score, width / 2, 5 * height / 8);
+        ctx.fillText("Hight Score: " + highscore, width / 2, 5.8 * height / 8);
         ctx.fillText("Press Enter to restart", width / 2, 7 * height / 8);
     }
 }
@@ -154,8 +159,6 @@ function checkSelf() {
         if (xHead == snakebodies[i].x &&
             yHead == snakebodies[i].y) {
             console.log("LOST");
-            console.log("LOST"); console.log("LOST"); console.log("LOST"); console.log("LOST");
-            console.log("LOST"); console.log("LOST"); console.log("LOST"); console.log("LOST");
             lost = true;
         }
     }
@@ -164,8 +167,8 @@ function spawnFood() {
     var randx = randomX()
     var randy = randomY()
 
-    xFood = width / 2 + speed * randx;
-    yFood = height / 2 + speed * randy;
+    xFood = width / 2 + (speed - 1) * randx;
+    yFood = height / 2 + (speed - 1) * randy;
 }
 function randomX() {
     var range = (width - size * 2) / speed;
