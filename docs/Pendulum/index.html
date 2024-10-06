@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pendulum Simulator</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+      width: 400px;
+      height: 400px;
+    }
+
+    #controls {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="pendulumCanvas"></canvas>
+  <div id="controls">
+    <label for="amplitude">Amplitude:</label>
+    <input type="number" id="amplitude" value="100">
+    <label for="period">Period:</label>
+    <input type="number" id="period" value="2">
+    <label for="frequency">Frequency:</label>
+    <input type="number" id="frequency" value="0.5">
+    <label for="offset">Offset:</label>
+    <input type="number" id="offset" value="0">
+    <button id="pauseButton">Pause</button>
+    <button id="resetButton">Reset</button>
+  </div>
+  <script>
+    const canvas = document.getElementById('pendulumCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const amplitudeInput = document.getElementById('amplitude');
+    const periodInput = document.getElementById('period');
+    const frequencyInput = document.getElementById('frequency');
+    const offsetInput = document.getElementById('offset');
+    const pauseButton = document.getElementById('pauseButton');
+    const resetButton = document.getElementById('resetButton');
+
+    let amplitude = 100;
+    let period = 2;
+    let frequency = 0.5;
+    let offset = 0;
+    let isPaused = false;
+    let startTime = Date.now();
+
+    function drawPendulum(angle) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const pendulumLength = 200;
+      const pendulumX = canvas.width / 2;
+      const pendulumY = 50;
+
+      const endX = pendulumX + pendulumLength * Math.sin(angle);
+      const endY = pendulumY + pendulumLength * Math.cos(angle);
+
+      ctx.beginPath();
+      ctx.moveTo(pendulumX, pendulumY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+    }
+
+    function update() {
+      const elapsedTime = (Date.now() - startTime) / 1000;
+      const angle = amplitude * Math.sin(2 * Math.PI * frequency * elapsedTime + offset);
+
+      drawPendulum(angle);
+
+      if (!isPaused) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    amplitudeInput.addEventListener('input', () => {
+      amplitude = parseFloat(amplitudeInput.value);
+    });
+
+    periodInput.addEventListener('input', () => {
+      period = parseFloat(periodInput.value);
+      frequency = 1 / period;
+      frequencyInput.value = frequency;
+    });
+
+    frequencyInput.addEventListener('input', () => {
+      frequency = parseFloat(frequencyInput.value);
+      period = 1 / frequency;
+      periodInput.value = period;
+    });
+
+    offsetInput.addEventListener('input', () => {
+      offset = parseFloat(offsetInput.value);
+    });
+
+    pauseButton.addEventListener('click', () => {
+      isPaused = !isPaused;
+      if (!isPaused) {
+        update();
+      }
+    });
+
+    resetButton.addEventListener('click', () => {
+      startTime = Date.now();
+      isPaused = false;
+      update();
+    });
+
+    update();
+  </script>
+</body>
+</html>
