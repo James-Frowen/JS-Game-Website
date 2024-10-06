@@ -49,7 +49,7 @@
     function drawPendulum(angle) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const pendulumLength = 200;
+      const pendulumLength = 50;
       const pendulumX = canvas.width / 2;
       const pendulumY = 50;
 
@@ -60,11 +60,17 @@
       ctx.moveTo(pendulumX, pendulumY);
       ctx.lineTo(endX, endY);
       ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.arc(endX, endY, 10, 0, 2 * Math.PI); // Adjust the radius as needed
+      ctx.fillStyle = 'black';
+      ctx.fill();
     }
 
     function update() {
       const elapsedTime = (Date.now() - startTime) / 1000;
-      const angle = amplitude * Math.sin(2 * Math.PI * frequency * elapsedTime + offset);
+      const m = amplitude / (2 * Math.PI);
+      const angle = m * Math.sin(2 * Math.PI * frequency * elapsedTime + offset);
 
       drawPendulum(angle);
 
